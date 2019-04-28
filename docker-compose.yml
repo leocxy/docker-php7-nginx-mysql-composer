@@ -25,7 +25,10 @@ services:
       context: ./fpm
     # mount folder to container
     volumes:
+      # Web application directory
       - ./www:/var/www/html
+      # Keep php logs
+      - ./logs/php:/var/log/php
     # Setup the environment variables
     environment:
       - MYSQL_USER=${MYSQL_USER}
@@ -36,11 +39,12 @@ services:
   # Container's for php-compose
   composer:
     # Just get the latest version of composer
-    images: composer
+    image: composer
     # mount the web folder
     volumes:
       - ./www:/var/www/html
-    command: install
+    # This need to be modify
+    # command: install
 
   # Container's for mysql
   mysqldb:
@@ -49,7 +53,7 @@ services:
       context: ./sql
     # Rename the container
     container_name: ${MYSQL_HOST}
-    # Setup the env
+    # Setup the env - This will store at volume once it have been created
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}

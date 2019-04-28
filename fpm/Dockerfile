@@ -28,5 +28,8 @@ RUN pecl install xdebug-2.7.1 \
 # override the fpm configuration to container
 COPY ./www.conf /usr/local/etc/php-fpm.d/
 
+# Create PHP log directory
+RUN mkdir -p /var/log/php
+
 # Point work dir
 WORKDIR /var/www/html

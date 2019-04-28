@@ -104,6 +104,63 @@ cd project-name
 
 ## Run the application
 
-1. 
+1.Create Docker machine. (Your might need to restart your computer/server if you running this at MacOS.)
 
-https://raw.githubusercontent.com/nanoninja/docker-nginx-php-mysql/master/README.md
+```sh
+sudo docker-machine create machinename
+```
+
+2.Start Docker machine.
+
+```sh
+sudo docker-machine start machinename
+```
+
+3.Setup the env variables.
+
+```sh
+eval $(docker-machine env machinename)
+```
+
+4.Get virtual machine IP.
+
+```sh
+docker-machine ip machinename
+```
+
+5.Go to your project direcotry. (Please keep in mind, in MacOS, please put your project under /Users/xxx/, or it might have issues when mounting the folder.)
+
+```sh
+cd ~/docker-project
+```
+
+6.Start the application
+
+```sh
+sudo docker-compose up
+```
+
+** This might take a few minutes if your first time run this application. **
+
+Or you can start with deamon mode.
+
+```sh
+sudo docker-compose up -d
+```
+
+7.Open your favorite browser:
+
+You got the virtual machine IP at [step-4](#get-virtual-machine-ip). For me, the ip was `192.168.99.100`.
+
+* [FPM-Status](http://192.168.99.100:8080/fpm_status)
+* [PHP-info](http://192.168.99.100:8080)
+
+----
+
+## Use Docker commands
+
+### Installing package with composer
+
+```sh
+sudo docker run --rm -v $(pwd)/www/your-project/:/app composer require symfony/yaml
+```
