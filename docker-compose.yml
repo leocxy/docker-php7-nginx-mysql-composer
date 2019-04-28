@@ -1,0 +1,67 @@
+version: "3"
+services:
+  # Container's name
+  web:
+    # Build from ./nginx/Dockerfile
+    build:
+      context: ./nginx
+    # Port Mapping Host:Container
+    ports:
+      - "8080:80"
+    # Keep nginx logs
+    volumes:
+      - ./logs/nginx:/var/log/nginx
+    # Should restart auto
+    restart: always
+    # Should not up until services ready
+    depends_on:
+      - fpm
+      - mysqldb
+
+  # Container's for php-fpm
+  fpm:
+    # Build from ./fpm/Dockerfile
+    build: 
+      context: ./fpm
+    # mount folder to container
+    volumes:
+      - ./www:/var/www/html
+    # Setup the environment variables
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    # Should restart auto
+    restart: always
+
+  # Container's for php-compose
+  composer:
+    # Just get the latest version of composer
+    images: composer
+    # mount the web folder
+    volumes:
+      - ./www:/var/www/html
+    command: install
+
+  # Container's for mysql
+  mysqldb:
+    # Build from ./sql/Dockerfile
+    build:
+      context: ./sql
+    # Rename the container
+    container_name: ${MYSQL_HOST}
+    # Setup the env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    # Port Mapping Host:Container
+    ports:
+      - "3306:3306"
+    # use data-volume to keep the mysql data
+    volumes:
+      - data-volume:/var/lib/mysql
+    restart: always
+
+# MySQL store at docker volume
+volumes:
+  data-volume:
