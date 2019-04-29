@@ -159,6 +159,18 @@ You got the virtual machine IP at [step-4](#get-virtual-machine-ip). For me, the
 
 ## Use Docker commands
 
+### Installing laravel installer
+
+```sh
+sudo docker run --rm -v $(pwd)/www/:/app/ composer global require "laravel/installer"
+```
+
+### Create a laravel project
+
+```sh
+sudo docker run --rm -v $(pwd)/www/:/app/ composer create-project --prefer-dist laravel/laravel "5.6.*"
+```
+
 ### Installing package with composer
 
 ```sh

@@ -7,7 +7,10 @@ services:
       context: ./nginx
     # Port Mapping Host:Container
     ports:
+      # phpinfo
       - "8080:80"
+      # laravel
+      - "8081:81"
     # Keep nginx logs
     volumes:
       - ./logs/nginx:/var/log/nginx
@@ -26,7 +29,7 @@ services:
     # mount folder to container
     volumes:
       # Web application directory
-      - ./www:/var/www/html
+      - ./www:/var/www/html:rw
       # Keep php logs
       - ./logs/php:/var/log/php
     # Setup the environment variables
