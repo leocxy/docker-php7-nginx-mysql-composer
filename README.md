@@ -157,6 +157,10 @@ You got the virtual machine IP at [step-4](#get-virtual-machine-ip). For me, the
 
 ----
 
+## Configure XDebug
+
+----
+
 ## Use Docker commands
 
 ### Installing laravel installer
@@ -175,4 +179,10 @@ sudo docker run --rm -v $(pwd)/www/:/app/ composer create-project --prefer-dist 
 
 ```sh
 sudo docker run --rm -v $(pwd)/www/your-project/:/app composer require symfony/yaml
+```
+
+### Reload nginx
+
+```sh
+sudo docker exec -i container_id nginx -s reload
 ```

@@ -7,12 +7,13 @@ services:
       context: ./nginx
     # Port Mapping Host:Container
     ports:
-      # phpinfo
-      - "8080:80"
-      # laravel
-      - "8081:81"
+      # range port mapping
+      - "8080-8100:80-100"
     # Keep nginx logs
     volumes:
+      # mount configuration directory to container, you can edit conf at host machine directly.
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./www:/var/www/html/
       - ./logs/nginx:/var/log/nginx
     # Should restart auto
     restart: always
