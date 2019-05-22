@@ -8,7 +8,8 @@ services:
     # Port Mapping Host:Container
     ports:
       # range port mapping
-      - "8080-8100:80-100"
+      #- "8080-8100:80-100"
+      - '80:80'
     # Keep nginx logs
     volumes:
       # mount configuration directory to container, you can edit conf at host machine directly.
@@ -33,6 +34,8 @@ services:
       - ./www:/var/www/html:rw
       # Keep php logs
       - ./logs/php:/var/log/php
+      # Mount script/toolkit for container
+      - ./fpm/scripts:/var/www/bin
     # Setup the environment variables
     environment:
       - MYSQL_USER=${MYSQL_USER}
@@ -47,8 +50,10 @@ services:
     # mount the web folder
     volumes:
       - ./www:/var/www/html
+    # Point this to your app directory
+    # working_dir: /var/www/html/myapp
     # This need to be modify
-    # command: install
+    # command: install -vvv
 
   # Container's for mysql
   mysqldb:

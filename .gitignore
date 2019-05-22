@@ -1,0 +1,7 @@
+### Nginx Configuration
+nginx/conf.d/*
+!nginx/conf.d/default.conf
+
+### Web App Directory
+www/*
+!www/index.php

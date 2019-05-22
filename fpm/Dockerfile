@@ -26,6 +26,9 @@ RUN docker-php-ext-install intl
 # Install zip
 RUN docker-php-ext-install zip
 
+# Install opcache
+RUN docker-php-ext-install opcache
+
 # Install latest version of memcached
 RUN apt-get update && apt-get install -y libmemcached-dev zlib1g-dev \
 	&& pecl install memcached-3.1.3 \
@@ -43,7 +46,8 @@ RUN pecl install xdebug-2.7.1 \
 RUN apt-get update && apt-get install -y libmcrypt-dev \
 	&& docker-php-ext-install mcrypt
 
-# Install 
+# override the php.ini to container
+#COPY ./php.ini /usr/local/etc/php/
 
 # override the fpm configuration to container
 COPY ./www.conf /usr/local/etc/php-fpm.d/
